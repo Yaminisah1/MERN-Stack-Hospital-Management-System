@@ -27,14 +27,20 @@ import app from './app.js'; // Ensure this imports your app instance
 
 // Use CORS middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL, // Use the frontend URL from environment variables
+  origin: [process.env.FRONTEND_URL, process.env.DASHBOARD_URL], // Allow both frontend and dashboard URLs
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Manually set CORS headers if necessary
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
+  const allowedOrigins = [process.env.FRONTEND_URL, process.env.DASHBOARD_URL];
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
