@@ -22,15 +22,23 @@ dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
-import app from './app.js';
 import cloudinary from 'cloudinary';
+import app from './app.js'; // Ensure this imports your app instance
 
 // Use CORS middleware
 app.use(cors({
-  origin: ['https://mern-stack-hospital-management-system-dvo8.onrender.com'],
+  origin: 'https://mern-stack-hospital-management-system-dvo8.onrender.com',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Manually set CORS headers if necessary
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'https://mern-stack-hospital-management-system-dvo8.onrender.com');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 // Cloudinary configuration
 cloudinary.v2.config({
@@ -44,5 +52,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server listening at port ${PORT}`);
 });
-
-
