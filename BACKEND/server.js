@@ -27,14 +27,14 @@ import app from './app.js'; // Ensure this imports your app instance
 
 // Use CORS middleware
 app.use(cors({
-  origin: 'https://mern-stack-hospital-management-system-dvo8.onrender.com',
+  origin: process.env.FRONTEND_URL, // Use the frontend URL from environment variables
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Manually set CORS headers if necessary
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://mern-stack-hospital-management-system-dvo8.onrender.com');
+  res.header('Access-Control-Allow-Origin', process.env.FRONTEND_URL);
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
