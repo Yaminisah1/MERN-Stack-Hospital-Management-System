@@ -51,7 +51,7 @@ const gotoAddNewAdmin = () => {
 
 const handleLogout = async () => {
   await axios
-    .get("http://localhost:4000/api/v1/user/admin/logout", {
+    .get("https://hospital-management-backend-q83p.onrender.com/api/v1/user/login/api/v1/user/admin/logout", {
       withCredentials: true,
     })
     .then((res) => {
